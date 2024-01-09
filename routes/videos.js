@@ -17,6 +17,12 @@ router.get("/", (req, res) => {
 });
 
 
+router.get("/:id", (req, res) => {
+    const data = readData();
+    const singleVideo = data.find((video) => video.id === req.params.id);
+    res.json(singleVideo);
+});
+
 
 
 
