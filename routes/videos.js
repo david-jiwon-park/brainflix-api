@@ -23,7 +23,29 @@ router.get("/:id", (req, res) => {
     res.json(singleVideo);
 });
 
+router.post("/", (req, res) => {
+    const newVideo = {
+        id: uniqid(),
+        title: req.body.title,
+        channel: "My Channel",
+        image: 'http://localhost:8080/images/default-thumbnail.jpeg',
+        description: req.body.description, 
+        views: "2,000,000", 
+        likes: "200,000", 
+        duration: "3:00", 
+        video: "https://project-2-api.herokuapp.com/stream",
+        timestamp: Date.now(),
+        comments: [], 
+    };
 
+    const data = readData();
+    data.push(newVideo);
+    fs.writeFileSync("./data/videos.json", JSON.stringify(data));
+
+    // Respond with the note that was created
+    res.status(201).json(newVideo);
+
+})
 
 
 
