@@ -5,6 +5,8 @@ const videoRoutes = require("./routes/videos");
 
 app.use(express.json());
 
+app.use('/images', express.static('./public/images'));
+
 app.use("/videos", videoRoutes);
 
 app.get('/', (req, res) => {
