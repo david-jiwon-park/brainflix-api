@@ -1,29 +1,41 @@
 const express = require("express");
-const router = express.Router(); // To use router, instantiate it like this
+const router = express.Router(); 
 const fs = require("fs");
 const uniqid = require("uniqid");
 
+// Creating re-usable function to read the videos.json data file
 function readData() {
     const videoData = fs.readFileSync("./data/videos.json");
     const parsedData = JSON.parse(videoData);
     return parsedData;
 }
 
-
+// GET /video endpoint to get limited details for all videos
 router.get("/", (req, res) => {
+
+    // Reading the data file and filtering for specific properties
     const data = readData();
     const filteredData = data.map(({ id, title, channel, image }) => ({ id, title, channel, image }));
+
+    // Responding with filtered data
     res.json(filteredData);
 });
 
-
+// GET /video/:id endpoint that gets all the details for one video based on the requested ID
 router.get("/:id", (req, res) => {
+
+    // Reading the data file and finding the single video whose ID matches the requested ID
     const data = readData();
     const singleVideo = data.find((video) => video.id === req.params.id);
+
+    // Responding with the single video
     res.json(singleVideo);
 });
 
+// POST endpoint to upload a video
 router.post("/", (req, res) => {
+
+    // Make a new video with a unique ID
     const newVideo = {
         id: uniqid(),
         title: req.body.title,
@@ -38,17 +50,16 @@ router.post("/", (req, res) => {
         comments: [], 
     };
 
+    // Reading the current video array and add the new video to the array
     const data = readData();
     data.push(newVideo);
+
+    // Writing the entire new videos array to the data file
     fs.writeFileSync("./data/videos.json", JSON.stringify(data));
 
-    // Respond with the note that was created
+    // Responding with the video that was uploaded
     res.status(201).json(newVideo);
+});
 
-})
-
-
-
-
-
+// Exporting the router for use in index.js
 module.exports = router;
