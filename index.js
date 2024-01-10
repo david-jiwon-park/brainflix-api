@@ -2,6 +2,10 @@ const express = require("express");
 const app = express();
 const PORT = 8080;
 const videoRoutes = require("./routes/videos");
+const cors = require("cors");
+
+// Adding middleware to implement Cross Origin Resource Sharing (CORS)
+app.use(cors());
 
 // Enabling JSON to be posted in request.body
 app.use(express.json());
