@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
-const PORT = 8080;
+require('dotenv').config();
+const PORT = process.env.PORT || 8080;
 const videoRoutes = require("./routes/videos");
 const cors = require("cors");
 
 // Adding middleware to implement Cross Origin Resource Sharing (CORS)
-app.use(cors());
+const { CORS_ORIGIN } = process.env;
+
+app.use(cors({ origin: CORS_ORIGIN }));
 
 // Enabling JSON to be posted in request.body
 app.use(express.json());
