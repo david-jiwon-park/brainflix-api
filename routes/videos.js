@@ -28,6 +28,11 @@ router.get("/:id", (req, res) => {
     const data = readData();
     const singleVideo = data.find((video) => video.id === req.params.id);
 
+    //Returns an error message if the video ID does not exist
+    if (!singleVideo) {
+        return res.status(404).send("This video ID does not exist.")
+    }
+
     // Responding with the single video
     res.json(singleVideo);
 });
