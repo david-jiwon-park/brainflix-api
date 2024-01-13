@@ -6,9 +6,7 @@ const videoRoutes = require("./routes/videos");
 const cors = require("cors");
 
 // Adding middleware to implement Cross Origin Resource Sharing (CORS)
-const { CORS_ORIGIN } = process.env;
-
-app.use(cors({ origin: CORS_ORIGIN }));
+app.use(cors());
 
 // Enabling JSON to be posted in request.body
 app.use(express.json());
