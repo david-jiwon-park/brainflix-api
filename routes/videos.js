@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
     const data = readData();
     const singleVideo = data.find((video) => video.id === req.params.id);
 
-    //Returns an error message if the video ID does not exist
+    // Returns an error message if the video ID does not exist
     if (!singleVideo) {
         return res.status(404).send("This video ID does not exist.")
     }
@@ -55,6 +55,11 @@ router.post("/", (req, res) => {
         timestamp: Date.now(),
         comments: [], 
     };
+
+    // Returns an error message if the title or description of the video is missing in the post request
+    if (!req.body.title || !req.body.description) {
+        return res.status(400).send("Please ensure both the title and description of the video are provided.")
+    }
 
     // Reading the current video array and add the new video to the array
     const data = readData();
