@@ -1,4 +1,5 @@
 const express = require("express");
+const PORT = process.env.PORT || 8080;
 const router = express.Router(); 
 const fs = require("fs");
 const uniqid = require("uniqid");
@@ -8,7 +9,7 @@ function readData() {
     const videoData = fs.readFileSync("./data/videos.json");
     const parsedData = JSON.parse(videoData);
     return parsedData;
-}
+};
 
 // GET /video endpoint to get limited details for all videos
 router.get("/", (req, res) => {
@@ -45,7 +46,7 @@ router.post("/", (req, res) => {
         id: uniqid(),
         title: req.body.title,
         channel: "My Channel",
-        image: 'http://localhost:8080/images/default-thumbnail.jpeg',
+        image: `http://localhost:${PORT}/images/default-thumbnail.jpeg`,
         description: req.body.description, 
         views: "2,000,000", 
         likes: "200,000", 
